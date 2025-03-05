@@ -1,4 +1,4 @@
-FROM ubuntu:22.04 AS toolchain-build
+FROM ubuntu:24.04 AS toolchain-build
 
 ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
