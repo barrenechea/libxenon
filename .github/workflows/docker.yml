@@ -11,7 +11,7 @@ on:
 jobs:
   build_toolchain:
     name: Build Toolchain
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +35,6 @@ jobs:
           CONTAINER_REPO: ghcr.io/barrenechea/libxenon
         with:
           context: .
-          file: libxenon.dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ env.CONTAINER_REPO }}:latest

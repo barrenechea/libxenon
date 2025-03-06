@@ -3,10 +3,10 @@ FROM ubuntu:24.04 AS toolchain-build
 ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt update && apt install -y \
+RUN apt-get -qq update && apt-get -qq install \
   flex bison gcc-multilib libgmp3-dev libmpfr-dev libmpc-dev \
   texinfo git-core build-essential wget file && \
-  apt -y clean autoclean autoremove && \
+  apt-get -qq clean autoclean autoremove && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 WORKDIR /build
@@ -21,10 +21,6 @@ RUN echo 'export DEVKITXENON="/usr/local/xenon"' >> /etc/profile.d/99-devkitxeno
 RUN echo 'export PATH="$PATH:$DEVKITXENON/bin:$DEVKITXENON/usr/bin"' >> /etc/profile.d/99-devkitxenon.sh
 
 FROM toolchain-build AS libxenon-build
-
-RUN apt update && apt install nano && \
-  apt -y clean autoclean autoremove && \
-  rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 WORKDIR /build
 COPY . .
