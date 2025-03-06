@@ -10,7 +10,6 @@ PARALLEL=
 BINUTILS=binutils-2.32
 GCC=gcc-9.2.0
 NEWLIB=newlib-3.1.0
-GDB=gdb-6.8
 
 ZLIB=zlib-1.2.11
 LIBPNG=libpng-1.5.10
@@ -72,19 +71,19 @@ function toolchain_install
         # Check if binutils sources are available, download it if needed
         if [ ! -f $BINUTILS_FILE ]; then
                 echo -e "Downloading $BINUTILS_FILE"
-                wget -c http://ftp.gnu.org/gnu/binutils/$BINUTILS_FILE || fail_with_info
+                wget -c -nv http://ftp.gnu.org/gnu/binutils/$BINUTILS_FILE || fail_with_info
         fi;
 
         # Check if gcc sources are available, download it if needed
         if [ ! -f $GCC_FILE ]; then
                 echo -e "Downloading $GCC_FILE"
-                wget -c ftp://ftp.gnu.org/gnu/gcc/$GCC/$GCC_FILE || fail_with_info
+                wget -c -nv ftp://ftp.gnu.org/gnu/gcc/$GCC/$GCC_FILE || fail_with_info
         fi;
 
         # Check if newlib sources are available, download it if needed
         if [ ! -f $NEWLIB_FILE ]; then
                 echo -e "Downloading $NEWLIB_FILE"
-                wget -c ftp://sourceware.org/pub/newlib/$NEWLIB_FILE || fail_with_info
+                wget -c -nv ftp://sourceware.org/pub/newlib/$NEWLIB_FILE || fail_with_info
         fi;
 
         rm -rf build
@@ -178,7 +177,7 @@ function zlib_install
 {
 	if [ ! -f "$ZLIB.tar.gz" ]; then
 		echo -e "Downloading $ZLIB.tar.gz"
-		wget -c http://zlib.net/fossils/$ZLIB.tar.gz || fail_with_info
+		wget -c -nv http://zlib.net/fossils/$ZLIB.tar.gz || fail_with_info
 	fi;
 
 	echo -e "Extracting zlib..."
@@ -216,7 +215,7 @@ function libpng_install
 {
 	if [ ! -f "$LIBPNG.tar.xz" ]; then
 		echo -e "Downloading $LIBPNG.tar.xz"
-		wget -c http://download.sourceforge.net/libpng/$LIBPNG.tar.xz || fail_with_info
+		wget -c -nv http://download.sourceforge.net/libpng/$LIBPNG.tar.xz || fail_with_info
 	fi;
 
 	echo -e "Extracting libpng..."
@@ -249,7 +248,7 @@ function bzip2_install
 {
 	if [ ! -f "$BZIP2.tar.gz" ]; then
 		echo -e "Downloading $BZIP2.tar.gz"
-		wget -c ftp://sourceware.org/pub/bzip2/$BZIP2.tar.gz || fail_with_info
+		wget -c -nv ftp://sourceware.org/pub/bzip2/$BZIP2.tar.gz || fail_with_info
 	fi;
 
 	echo -e "Extracting bzip2..."
@@ -270,7 +269,7 @@ function freetype_install
 {
 	if [ ! -f "$FREETYPE.tar.gz" ]; then
 		echo -e "Downloading $FREETYPE.tar.gz"
-		wget -c http://download.savannah.gnu.org/releases/freetype/$FREETYPE.tar.gz || fail_with_info
+		wget -c -nv http://download.savannah.gnu.org/releases/freetype/$FREETYPE.tar.gz || fail_with_info
 	fi;
 	
 	echo -e "Extracting freetype..."
