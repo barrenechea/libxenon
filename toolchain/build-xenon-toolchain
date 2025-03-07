@@ -5,7 +5,7 @@
 
 TARGET=xenon
 PREFIX=${PREFIX:-/usr/local/xenon} # Install location of your final toolchain
-PARALLEL=
+PARALLEL="-j$(nproc)"
 
 BINUTILS=binutils-2.32
 GCC=gcc-9.2.0
@@ -28,10 +28,8 @@ if type "pv" &> /dev/null; then
   EXTR=pv
 fi;
 
-#FSBRANCH=Swizzy
-
 # path to the logfile
-LOGFILE="`pwd`/build.log"
+LOGFILE="$(pwd)/build.log"
 
 # temp variables export
 export DEVKITXENON="$PREFIX"
@@ -65,7 +63,7 @@ function toolchain_install
         echo -e "Creating final xenon toolchain directory: $PREFIX"
         if [ ! -d $PREFIX ]; then
                 mkdir $PREFIX
-                chown -R `whoami`:`whoami` $PREFIX
+                chown -R $(whoami):$(whoami) $PREFIX
         fi;
 
         # Check if binutils sources are available, download it if needed
@@ -189,7 +187,7 @@ function zlib_install
 	export CC=$TARGET-gcc
 	export CFLAGS="-mcpu=cell -mtune=cell -m32 -fno-pic -mpowerpc64 -Wno-error -L$DEVKITXENON/xenon/lib/32/ -T$DEVKITXENON/app.lds -u read -u _start -u exc_base -L$DEVKITXENON/usr/lib -I$DEVKITXENON/usr/include"
 	export LDFLAGS="$CFLAGS"
-	export TARGET=`gcc -v 2>&1 | sed -n '2p' | awk '{print $2}'`
+	export TARGET=$(gcc -v 2>&1 | sed -n '2p' | awk '{print $2}')
 
 	echo -e "Configuring zlib..."
 	./configure --prefix=$DEVKITXENON/usr >> $LOGFILE 2>&1 || fail_with_info
@@ -309,17 +307,9 @@ function filesystems_install
 		echo -e -n "$i: "
 		if [ ! -d $i ]; then
 			echo -e -n "Cloning... "
-			git clone https://github.com/Free60Project/$i.git  >> $LOGFILE 2>&1 || fail_with_info
-			if [ "" != "$FSBRANCH" ]; then
-				cd $i
-				git checkout $FSBRANCH >> $LOGFILE 2>&1
-				cd ..
-			fi			
+			git clone https://github.com/Free60Project/$i.git  >> $LOGFILE 2>&1 || fail_with_info	
 		else
 			cd $i
-			if [ "" != "$FSBRANCH" ]; then
-				git checkout $FSBRANCH >> $LOGFILE 2>&1
-			fi	
 			git remote update >> $LOGFILE 2>&1
 			git status -uno | grep -q behind
 			if [ 0 -eq $? ]; then
