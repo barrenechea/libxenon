@@ -302,7 +302,7 @@ function filesystems_install
 {
 	echo -e "Building Filesystems..."
 
-	filesystems="fat-xenon ext2fs-xenon xtaflib" # ntfs-xenon ext2fs-xenon xtaflib
+	filesystems="libfat libext2fs libxtaf" # ntfs-xenon ext2fs-xenon xtaflib
 
 	for i in $filesystems
 	do
