@@ -55,8 +55,8 @@ function libxenon_install
 
 function toolchain_install
 {
-        BINUTILS_FILE="${BINUTILS}.tar.gz"
-        GCC_FILE="${GCC}.tar.gz"
+        BINUTILS_FILE="${BINUTILS}.tar.xz"
+        GCC_FILE="${GCC}.tar.xz"
         NEWLIB_FILE="${NEWLIB}.tar.gz"
 
         # Make working directory
@@ -91,7 +91,7 @@ function toolchain_install
           if [ ! -d $BINUTILS ]; then
             mkdir $BINUTILS
             echo -e "Extracting binutils..."
-            $EXTR $BINUTILS_FILE | tar xfz - >> $LOGFILE 2>&1 || fail_with_info
+            $EXTR $BINUTILS_FILE | tar xJf - >> $LOGFILE 2>&1 || fail_with_info
             cat $BINUTILS.diff | patch -p0 >> $LOGFILE 2>&1 || fail_with_info
 
             if [ -f $BINUTILS-vmx128.diff ]; then
@@ -114,7 +114,7 @@ function toolchain_install
           if [ ! -d $GCC ]; then
             mkdir $GCC
             echo -e "Extracting gcc..."
-            $EXTR $GCC_FILE | tar xfz - >> $LOGFILE 2>&1 || fail_with_info
+            $EXTR $GCC_FILE | tar xJf - >> $LOGFILE 2>&1 || fail_with_info
             cat $GCC.diff | patch -p0 >> $LOGFILE 2>&1 || fail_with_info
           fi;
           cd build
@@ -267,14 +267,14 @@ function bzip2_install
 
 function freetype_install
 {
-	if [ ! -f "$FREETYPE.tar.gz" ]; then
-		echo -e "Downloading $FREETYPE.tar.gz"
-		wget -c -nv http://download.savannah.gnu.org/releases/freetype/$FREETYPE.tar.gz || fail_with_info
+	if [ ! -f "$FREETYPE.tar.xz" ]; then
+		echo -e "Downloading $FREETYPE.tar.xz"
+		wget -c -nv http://download.savannah.gnu.org/releases/freetype/$FREETYPE.tar.xz || fail_with_info
 	fi;
 	
 	echo -e "Extracting freetype..."
 	rm -rf $FREETYPE
-	tar xzf $FREETYPE.tar.gz >> $LOGFILE 2>&1 || fail_with_info
+	tar xJf $FREETYPE.tar.xz >> $LOGFILE 2>&1 || fail_with_info
 	cd $FREETYPE
 
 	export CC=$TARGET-gcc
