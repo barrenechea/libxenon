@@ -1,0 +1,14 @@
+diff -ENwbur ../binutils-2.44/config.sub binutils-2.44/config.sub
+--- ../binutils-2.44/config.sub	2025-02-01 21:00:00.000000000 -0300
++++ binutils-2.44/config.sub	2025-03-06 17:11:07.022903445 -0300
+@@ -936,6 +936,10 @@
+ 		cpu=power
+ 		vendor=ibm
+ 		;;
++	xenon)
++		cpu=powerpc64
++		basic_os=linux
++		;;
+ 	ps2)
+ 		cpu=i386
+ 		vendor=ibm
