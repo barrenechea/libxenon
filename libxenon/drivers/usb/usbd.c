@@ -597,7 +597,7 @@ int usb_make_sync_request(usbdev_t *dev,int epaddr,uint8_t *buf,int length,int f
     *  	   else error
     ********************************************************************* */
 
-int usb_simple_request(usbdev_t *dev,uint8_t reqtype,int bRequest,int wValue,int wIndex)
+int usb_simple_request(usbdev_t *dev,uint8_t reqtype,uint8_t bRequest,uint16_t wValue,uint16_t wIndex)
 {
     return usb_std_request(dev,reqtype,bRequest,wValue,wIndex,NULL,0);
 }

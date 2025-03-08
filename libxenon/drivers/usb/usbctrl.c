@@ -70,7 +70,7 @@ static int usbctrl_detach(usbdev_t *dev);
 
 #define UBR_KBD_MAX 20
 
-static int controller_mask = 0;
+static uint16_t controller_mask = 0;
 
 usbdev_t *RFdev;
 
@@ -114,7 +114,7 @@ static int usbctrl_set_led_callback(usbreq_t *ur) {
     return 0;
 }
 
-int usbctrl_set_rol(uint controllerMask)
+int usbctrl_set_rol(uint16_t controllerMask)
 {
 	if(!RFdev)
 		return -1;
