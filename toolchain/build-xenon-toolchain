@@ -69,19 +69,19 @@ function toolchain_install
         # Check if binutils sources are available, download it if needed
         if [ ! -f $BINUTILS_FILE ]; then
                 echo -e "Downloading $BINUTILS_FILE"
-                wget -c -nv http://ftp.gnu.org/gnu/binutils/$BINUTILS_FILE || fail_with_info
+                wget -c -nv https://sourceware.org/pub/binutils/releases/$BINUTILS_FILE || fail_with_info
         fi;
 
         # Check if gcc sources are available, download it if needed
         if [ ! -f $GCC_FILE ]; then
                 echo -e "Downloading $GCC_FILE"
-                wget -c -nv ftp://ftp.gnu.org/gnu/gcc/$GCC/$GCC_FILE || fail_with_info
+                wget -c -nv https://sourceware.org/pub/gcc/releases/$GCC/$GCC_FILE || fail_with_info
         fi;
 
         # Check if newlib sources are available, download it if needed
         if [ ! -f $NEWLIB_FILE ]; then
                 echo -e "Downloading $NEWLIB_FILE"
-                wget -c -nv ftp://sourceware.org/pub/newlib/$NEWLIB_FILE || fail_with_info
+                wget -c -nv https://sourceware.org/pub/newlib/$NEWLIB_FILE || fail_with_info
         fi;
 
         rm -rf build
@@ -248,7 +248,7 @@ function bzip2_install
 {
 	if [ ! -f "$BZIP2.tar.gz" ]; then
 		echo -e "Downloading $BZIP2.tar.gz"
-		wget -c -nv ftp://sourceware.org/pub/bzip2/$BZIP2.tar.gz || fail_with_info
+		wget -c -nv https://sourceware.org/pub/bzip2/$BZIP2.tar.gz || fail_with_info
 	fi;
 
 	echo -e "Extracting bzip2..."
