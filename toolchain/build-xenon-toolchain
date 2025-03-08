@@ -9,7 +9,7 @@ PARALLEL="-j$(nproc)"
 
 BINUTILS=binutils-2.44
 GCC=gcc-9.2.0
-NEWLIB=newlib-3.1.0
+NEWLIB=newlib-4.5.0.20241231
 
 ZLIB=zlib-1.3.1
 LIBPNG=libpng-1.5.30
@@ -321,6 +321,10 @@ function filesystems_install
 				make clean >> $LOGFILE 2>&1
 			fi
 			cd ..
+		fi
+		if [ "$i" == "libfat" ]; then
+			echo -e -n "Patching... "
+			sed -i '/st->st_spare[1-3] = 0;/d' $i/source/directory.c
 		fi
 		echo -e -n "Building... "
 		make -C $i >> $LOGFILE 2>&1 || fail_with_info
