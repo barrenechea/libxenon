@@ -9,6 +9,7 @@ PARALLEL="-j$(nproc)"
 
 BINUTILS=binutils-2.44
 GCC=gcc-10.1.0
+GCC_TAG=releases/${GCC}
 NEWLIB=newlib-4.5.0.20241231
 
 ZLIB=zlib-1.3.1
@@ -56,7 +57,6 @@ function libxenon_install
 function toolchain_install
 {
         BINUTILS_FILE="${BINUTILS}.tar.xz"
-        GCC_FILE="${GCC}.tar.xz"
         NEWLIB_FILE="${NEWLIB}.tar.gz"
 
         # Make working directory
@@ -70,12 +70,6 @@ function toolchain_install
         if [ ! -f $BINUTILS_FILE ]; then
                 echo -e "Downloading $BINUTILS_FILE"
                 wget -c -nv https://sourceware.org/pub/binutils/releases/$BINUTILS_FILE || fail_with_info
-        fi;
-
-        # Check if gcc sources are available, download it if needed
-        if [ ! -f $GCC_FILE ]; then
-                echo -e "Downloading $GCC_FILE"
-                wget -c -nv https://sourceware.org/pub/gcc/releases/$GCC/$GCC_FILE || fail_with_info
         fi;
 
         # Check if newlib sources are available, download it if needed
@@ -112,9 +106,9 @@ function toolchain_install
 
         if $BUILD_GCC; then
           if [ ! -d $GCC ]; then
-            mkdir $GCC
-            echo -e "Extracting gcc..."
-            $EXTR $GCC_FILE | tar xJf - >> $LOGFILE 2>&1 || fail_with_info
+            echo -e "Cloning gcc..."
+            git clone --branch $GCC_TAG --depth 1 https://github.com/gcc-mirror/gcc $GCC >> $LOGFILE 2>&1 || fail_with_info
+            echo -e "Applying gcc patches..."
             cat $GCC.diff | patch -p0 >> $LOGFILE 2>&1 || fail_with_info
           fi;
           cd build
