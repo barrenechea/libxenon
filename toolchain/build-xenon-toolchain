@@ -416,17 +416,6 @@ function check_build-essential
 			apt install -y flex bison >> $LOGFILE 2>&1
 		fi
 	fi;
-
-	dpkg -s gcc-multilib >> $LOGFILE 2>&1
-	if [ $? -eq 1 ]; then
-		echo -e "gcc-multilib was not detected on your system (binutils)"
-		echo -e "Do you want this script to attempt to install it for you? (y/n)"
-		read answer >> $LOGFILE 2>&1
-		if [ "$answer" == "y" ]; then
-			echo -e "Please wait while installing gcc-multilib..."
-			apt install -y gcc-multilib >> $LOGFILE 2>&1
-		fi
-	fi;
 }
 
 # start

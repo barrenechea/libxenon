@@ -28,7 +28,6 @@ Dependencies for debian
 
 - flex
 - bison
-- gcc-multilib
 - libgmp3-dev
 - libmpfr-dev
 - libmpc-dev
