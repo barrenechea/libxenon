@@ -7,9 +7,9 @@ TARGET=xenon
 PREFIX=${PREFIX:-/usr/local/xenon} # Install location of your final toolchain
 PARALLEL="-j$(nproc)"
 
-BINUTILS=binutils-2.32
-GCC=gcc-9.2.0
-NEWLIB=newlib-3.1.0
+BINUTILS=binutils-2.44
+GCC=gcc-13.3.0
+NEWLIB=newlib-4.5.0.20241231
 
 ZLIB=zlib-1.3.1
 LIBPNG=libpng-1.5.30
@@ -159,7 +159,8 @@ function toolchain_install
                   --with-gmp=/opt/local --with-mpfr=/opt/local --disable-decimal-float --disable-libquadmath \
                   --enable-languages=c,c++ --disable-libssp --disable-libsanitizer --with-newlib --enable-cxx-flags="-G0" \
                   --disable-libmudflap --disable-nls --disable-shared --disable-linux-futex --enable-altivec \
-                  --disable-libatomic --disable-threads --disable-libgomp --disable-libitm -v >> $LOGFILE 2>&1 || fail_with_info
+                  --disable-libatomic --disable-threads --disable-libgomp --disable-libitm --disable-libstdcxx-time \
+                  -v >> $LOGFILE 2>&1 || fail_with_info
           echo -e "Building gcc - 2nd pass, this could take a while..."
           make $PARALLEL 2>&1 >> $LOGFILE || fail_with_info
           make install 2>&1 >> $LOGFILE || fail_with_info
@@ -321,6 +322,10 @@ function filesystems_install
 				make clean >> $LOGFILE 2>&1
 			fi
 			cd ..
+		fi
+		if [ "$i" == "libfat" ]; then
+			echo -e -n "Patching... "
+			sed -i '/st->st_spare[1-3] = 0;/d' $i/source/directory.c
 		fi
 		echo -e -n "Building... "
 		make -C $i >> $LOGFILE 2>&1 || fail_with_info
