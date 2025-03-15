@@ -227,7 +227,7 @@ int usb_get_config_descriptor(usbdev_t *dev,usb_config_descr_t *dscr,int idx,int
 int usb_get_device_status(usbdev_t *dev,usb_device_status_t *status);
 int usb_set_configuration(usbdev_t *dev,int config);
 int usb_open_pipe(usbdev_t *dev,usb_endpoint_descr_t *epdesc);
-int usb_simple_request(usbdev_t *dev,uint8_t reqtype,int bRequest,int wValue,int wIndex);
+int usb_simple_request(usbdev_t *dev,uint8_t reqtype,uint8_t bRequest,uint16_t wValue,uint16_t wIndex);
 void usb_complete_request(usbreq_t *ur,int status);
 int usb_get_device_descriptor(usbdev_t *dev,usb_device_descr_t *dscr,int smallflg);
 int usb_set_ep0mps(usbdev_t *dev,int mps);

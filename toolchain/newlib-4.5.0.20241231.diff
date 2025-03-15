@@ -1,0 +1,16 @@
+diff -ENwbur ../newlib-4.5.0.20241231/config.sub newlib-4.5.0.20241231/config.sub
+--- ../newlib-4.5.0.20241231/config.sub	2024-12-31 22:35:33.000000000 -0300
++++ newlib-4.5.0.20241231/config.sub	2025-03-06 17:00:29.170511829 -0300
+@@ -879,6 +879,12 @@
+ 		cpu=pn
+ 		vendor=gould
+ 		;;
++	ppu)
++		cpu=powerpc64
++		;;
++	xenon)
++		cpu=powerpc64
++		;;
+ 	power)
+ 		cpu=power
+ 		vendor=ibm
