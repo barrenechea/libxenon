@@ -4,7 +4,7 @@ ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get -qq update && apt-get -qq dist-upgrade && apt-get -qq install \
-  flex bison gcc-multilib libgmp3-dev libmpfr-dev libmpc-dev \
+  flex bison libgmp3-dev libmpfr-dev libmpc-dev \
   texinfo git-core build-essential wget file && \
   apt-get -qq clean autoclean autoremove && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
